@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+</head>
+<body>
+    <h1>Your Daily Todo List</h1>
+    <form action="/add" method="post">
+        <label for="Task">Todo Task:</label>
+        <input type="text" id="Task" name="Task" placeholder="Enter Task Here"><br>
+        <label for="DueBy">Todo By:</label>
+        <input type="text" id="DueBy" name="DueBy" placeholder="Due By">
+        <button type="sumbit">Add</button>
+    </form>
+
+    {% for todo in todo_list %}
+        <div>
+            <input type="checkbox" name="todo_id" value="{{ todo.id }}">
+            <p>Task #{{ todo.id }}: {{ todo.task }}</p>
+            <p>Due Date: {{ todo.date}}</p>
+            <a href="/delete/{{ todo.id }}">Delete</a>
+        </div>
+    {% endfor %}
+</body>
+</html>

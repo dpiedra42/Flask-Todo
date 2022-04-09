@@ -5,24 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='true'/>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <script>
+
+        function hideCheckedBox() {
+            var checkbox = document.getElementsByName("todo_id");
+            var checkdiv = document.getElementsByClassName("todo-item");
+            for(var i = 0; i< checkbox.length; i++){
+                box = checkbox[i];
+                div = checkdiv[i];
+                if(box.checked){
+                    box.parentNode.removeChild(box);
+                    div.parentNode.removeChild(div);
+                }
+            }
+        }
+        </script>
 </head>
 <body>
-    <h1>Your Daily Todo List</h1>
-    <form action="/add" method="post">
-        <label for="Task">Todo Task:</label>
-        <input type="text" id="Task" name="Task" placeholder="Enter Task Here"><br>
-        <label for="DueBy">Todo By:</label>
-        <input type="text" id="DueBy" name="DueBy" placeholder="Due By">
-        <button type="sumbit">Add</button>
-    </form>
-
-    {% for todo in todo_list %}
-        <div>
-            <input type="checkbox" name="todo_id" value="{{ todo.id }}">
-            <p>Task #{{ todo.id }}: {{ todo.task }}</p>
-            <p>Due Date: {{ todo.date}}</p>
-            <a href="/delete/{{ todo.id }}">Delete</a>
+    <div class="task-container">
+        <div class="page-title">
+            <h1>Your Daily Todo List</h1>
         </div>
-    {% endfor %}
+        <div class="todo-form">
+            <form action="/add" method="post">
+                <label for="Task">Todo Task:</label>
+                <input type="text" id="Task" name="Task" placeholder="Enter Task Here"><br>
+                <label for="DueBy">Todo By:</label>
+                <input type="text" id="DueBy" name="DueBy" placeholder="Due By">
+                <button type="sumbit">Add</button>
+            </form>
+        </div>
+    
+        {% for todo in todo_list %}
+            <div class="todo-item">
+                <input type="checkbox" name="todo_id" value="{{ todo.id }}" onclick="hideCheckedBox();">
+                <p class="task-p">Task #{{ todo.id }}: {{ todo.task }}</p>
+                <p class="task-p">Due Date: {{ todo.date}}</p>
+                <a href="/delete/{{ todo.id }}">Delete</a>
+            </div>
+        {% endfor %}
+    </div>
 </body>
 </html>
